@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+* {
+    font-family: "Roboto";
+    /* font-size: 8pt; */
+}
+
+.form-details label {
+    width: 100px;
+}

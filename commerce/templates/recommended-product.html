@@ -1,0 +1,40 @@
+{% load staticfiles %}
+
+<div class="recommended_items col-lg-12"><!--recommended_items-->
+    <h2 class="title text-center">Produits recommendés</h2>
+    
+    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for products in products_slide %}
+                {% ifequal products products_slide|first %}                                    
+                <div class="item active">
+                {% else %}
+                <div class="item">
+                {% endifequal %}                            
+                {% for product in products %}
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="productinfo text-center">
+                                <img class="img1" src="{{ MEDIA_URL }}{{ product.thumbnail }}" alt="" />
+                                <h4 class="product-name">{{ product.name|truncatechars:25 }}</h4>
+                                <a href="{% url 'commerce:display_product' product.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Détails</a>
+                            </div>
+                        </div>
+                    </div>
+                                                          
+                {% empty %}
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+    
+</div><!--/recommended_items-->

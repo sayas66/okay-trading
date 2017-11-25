@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+
+{% block title %}Confirmation de commande{% endblock%}
+
+{% block content %}  
+<section id="cart_items">
+    <form method="post" action=".">
+        <div class="row">
+            {% csrf_token %}
+            
+            <h3>Mes rensignements de commande</h3>
+            <small>
+                <a class="pull-right" href="{% url 'commerce:add_address' %}?next={% url 'commerce:shipping' cart.product_id %}">
+                    <i class="fa fa-plus"></i> Ajouter une renseignement
+                </a>
+            </small>
+            
+            {% if addresses %}
+                <p class="text-info">Choisir votre renseignement pour cette commande ou ajouter un nouveau.</p>
+            {% endif %}
+
+            {% for address in addresses %}
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <input type="radio" name="shipping_address" id="shipping_address_{{ forloop.counter }}"
+                               value="{{ address.id }}" {% if forloop.counter == 1 or shipping_address == address.id %}checked{% endif %}>
+                            {% if address.type == 'Particulier' %}                                    
+                                {{ address.first_name }} {{ address.last_name }}
+                            {% else %}                                    
+                                {{ address.company }} {{ address.company_form }}
+                            {% endif %}
+                            <small>&laquo; {{ address.type }} &raquo;</small>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                        {{ address.address }}<br>
+                        {{ address.city }} - {{ address.postcode }}
+                        </p>
+                    </div>
+                </div>            
+            </div>
+            {% empty %}
+                <p class="text-info"><i class="fa fa-3x fa-info-circle pull-left"></i>Vous n'avez pas encore de renseignement pour votre compte client.
+                <br />Pour commander, commencez par ajouter un renseignement en cliquant sur le bouton le lien ajouter.</p>
+            {% endfor %}
+        </div>
+        
+        <div class="row">
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">Produit</td>
+                            <td class="description"></td>
+                            <td class="price">Prix fournisseur</td>
+                            <td class="quantity">Quatité commandé</td>
+                            <td class="total">Total fournisseur</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--  -->
+                        <tr>
+                            <td class="cart_product">
+                                <img src="{{ MEDIA_URL }}{{ cart.product.thumbnail }}" width="100px"/>
+                            </td>
+                            <td class="cart_description">
+                                <h4>{{ cart.product.name }}</h4>
+                                <small>{{ cart.product.short_desc }}</small>
+                            </td>
+                            <td class="cart_price">{{ cart.product.price }} AR</td>
+                            <td class="cart_quantity">{{ cart.quantity }}</td>
+                            <td class="cart_total">{{ cart.total }} AR</td>
+                            <td class="cart_delete">
+                                <a class="btn btn-primary" href="{% url 'commerce:display_product' cart.product.id %}"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    <!--  -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        {% if addresses %}
+        <div class="row">
+            <h3>Engagement du client</h3>
+            <small>
+                <p class="text-info">
+                    <input type="checkbox" name="accepte_terme">
+                    Cocher cette case si vous acceptez ce terme.
+                </p>
+            </small>
+                          
+            <ol>
+                <li>La durée de validité de cette souscription est de {{ cart.product.date_validity }}.</li>
+                <li>OKAY TRADING mettra tout en oeuvre afin de faire d'atteindre le MOQ nécessaire au lancement de la commande.</li>
+                <li>Le client s'engage a honorer la souscription en cas d'atteinte des MOQ.</li>
+            </ol>
+            <b>Je m'engage a honoré cette souscription en cas d'atteinte des MOQ.</b>
+        
+            <p>Le contrat de commande sera enregistrer sous forme de pdf.</p>
+            <button type="submit" class="btn btn-primary pull-right" name="register" id="confirme">
+                Confirmer ma commande</a>
+            </button>
+        </div>
+        {% endif %}
+
+    </form>
+</section>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            $("#confirme").hide();
+            $("input:checkbox").click(function() {
+                var x = $("input[name='accepte_terme']:checked").val()
+                <!-- alert(x); -->
+                if(x == 'on') {
+                    $("#confirme").show();
+                }
+                else {
+                    $("#confirme").hide();
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Mes renseignements{% endblock%}
+
+{% load staticfiles %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            {% include "side-bar.html" %}
+            
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <h2 class="title text-center">Mes renseignement de commande</h2>
+                    
+                    <div class="">
+                        {% for address in addresses %}
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        {% if address.type == 'Particulier' %}
+                                        <h3 class="panel-title">{{ address.first_name }} {{ address.last_name }}</h3>
+                                        {% else %}
+                                        <h3 class="panel-title">{{ address.company }} {{ address.company_form }}</h3>
+                                        {% endif %}
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>{{ address.address }}</p>
+                                        <p>{{ address.city }} {{ address.postcode }}</p>
+                                        {% comment %}
+                                        <div class="pull-right">
+                                            <a href="{% url 'commerce:remove_address' address.id %}"><span class="glyphicon glyphicon-trash"></span> supprimer</a>
+                                        </div>
+                                        {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="text-info"><i class="fa fa-3x fa-info-circle pull-left"></i>Vous n'avez pas encore renseigné d'adresse dans votre compte client.
+                            <br />Pour commander, commencez par ajouter une adresse en cliquant sur le bouton "Ajouter une adresse".</p>
+        
+                        {% endfor %}
+                        <a class="btn btn-primary pull-right" href="{% url 'commerce:add_address' %}?next={% url 'commerce:addresses' %}">
+                            <i class="fa fa-plus"></i> Ajouter une adresse
+                        </a>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

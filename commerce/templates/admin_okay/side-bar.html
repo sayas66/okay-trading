@@ -1,0 +1,53 @@
+{% load static %}
+
+<div class="col-sm-3">
+    <div class="left-sidebar"> 
+            {% comment %}      
+            <!-- categories -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" href="#item-category" data-toggle="collapse">
+                                <h4>Offres<span class="glyphicon glyphicon-chevron-right pull-right"></span></h4>
+                            </a>
+                        </h3>
+                </div>
+                <div id="item-category" class="collapse in">
+                    <div class="list-group">
+                    {% for category in categories_list %}
+                        <a class="list-group-item" href="{% url 'commerce:display_category' category.id %}">{{ category.name }}</a>
+                    {% empty %}
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endcomment %}
+            <!-- account -->
+            {% if user.is_authenticated %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a class="accordion-toggle" href="#item-account" data-toggle="collapse">
+                            <h4>Statistique<span class="glyphicon glyphicon-chevron-right pull-right"></span></h4>
+                        </a>
+                    </h3>
+                </div>
+                <div id="item-account" class="collapse in">
+                    <div class="list-group">
+                        <a class="list-group-item " href="{% url 'commerce:display_users' %}">
+                            Liste des client
+                            <span class="badge">{{ user_count }}</span>
+                        </a>
+                        <a class="list-group-item " href="{% url 'commerce:index' %}">Commandes</a>
+                        <a class="list-group-item " href="{% url 'commerce:display_users_order_special' %}">Commandes speciales</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="panel">
+                <img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+            </div>
+            
+    </div>
+</div>

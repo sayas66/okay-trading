@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+    <section><!--form-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="signup-form"><!--sign up form-->
+                        <h2>Connexion</h2>
+        
+                        <form action="" method="POST" class="form">
+                            {% csrf_token %}
+                            
+                            {% bootstrap_form form %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-default btn-block" name="register" id="button-create" disable="disabled">
+                                    Se connecter
+                                </button>
+                            {% endbuttons %}
+    
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock %}

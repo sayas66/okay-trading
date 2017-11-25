@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}Liste des clients{% endblock %}
+
+{% block content %}
+<section id="cart_items">
+    <div class="container">
+        <div class="row">
+            {% include "admin_okay/side-bar.html" %}            
+            <div class="col-sm-9 padding-right">
+                <div class="table-responsive cart_info">
+                    
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image">Nom</td>
+                                <td class="description">Prénom</td>
+                                <td class="price">e-mail</td>
+                                <td class="quantity">Pseudo</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--  -->
+                            {% for user1 in users %}
+                                {% if not user1.is_superuser %}
+                                <tr>
+                                    <td class="cart_total">
+                                        <a href="{% url 'commerce:display_users_order' user1.id %}">
+                                        {{ user1.username }}
+                                        </a>
+                                    </td>
+                                    <td class="cart_price">{{ user1.last_name }}</td>
+                                    <td class="cart_quantity">{{ user1.first_name }}</td>
+                                    <td class="cart_total">{{ user1.email }}</td>
+                                </tr>
+                                {% endif %}
+                            {% empty %}
+                            {% endfor %}
+                        <!--  -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+<!--  -->
+        
+
+{% endblock %}

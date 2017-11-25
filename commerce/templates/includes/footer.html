@@ -1,0 +1,49 @@
+{% load staticfiles %}
+
+<footer id="footer"><!--Footer-->
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="companyinfo">
+                        <h2><span>O</span>KAY</h2>
+                        <p>OKAY TRADING SARL dispose de plusieurs représentants en Asie qui se déplacent pérsonnellement chez les fournisseurs pour les négociations.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+   
+      <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="single-widget">
+                        <h2>Services</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="{% url 'commerce:condition' %}">Termes et Condition de Vente</a></li>
+                            <li><a href="{% url 'commerce:information' %}">Information</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-sm-offset-3">
+                    
+                    <div class="address">
+                        <img src="{% static 'images/home/map.png' %}" alt="" />
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <p class="pull-left">Copyright © 2017 OKAY. Tous droits réservés.</p>
+            </div>
+        </div>
+    </div>
+    
+</footer><!--/Footer-->

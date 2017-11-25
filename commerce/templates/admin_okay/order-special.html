@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}Commande spécial{% endblock %}
+
+{% block content %}
+<section id="cart_items">
+    <div class="container">
+        <div class="row">
+            {% include "admin_okay/side-bar.html" %}            
+            <div class="col-sm-9 padding-right">
+                <div class="table-responsive cart_info">
+                    
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="quantity">Pseudo</td>
+                                <td class="price">e-mail</td>
+                                <td class="price">Produit</td>
+                                <td class="price">Description</td>
+                                <td class="price">Quantité</td>
+                                <td class="price"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--  -->
+                            {% for order in orders %}
+                                <tr>
+                                    <td class="">
+                                        <a href="{% url 'commerce:display_users_order' order.user.id %}">
+                                        <span class="glyphicon glyphicon-user"></span> {{ order.user.username }}
+                                        </a>
+                                    </td>
+                                    <td class="">{{ order.user.first_name }}</td>
+                                    <td class="">{{ order.name }}</td>
+                                    <td class="">{{ order.short_desc }}</td>
+                                    <td class="">{{ order.quantity }}</td>
+                                    <td class="">
+                                        {% if order.status == 'En attente' %}                                            
+                                            <a href="{% url 'commerce:users_order_special_validate' order.id %}" class="text-info"><span class="glyphicon glyphicon-ok"></span></a> |                                     
+                                            <a href="#" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                        {% endif %}
+                                    </td>                                    
+                                </tr>
+                            {% empty %}
+                            {% endfor %}
+                        <!--  -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+<!--  -->
+        
+
+{% endblock %}

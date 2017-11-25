@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Information{% endblock %}
+
+{% block content %}
+        
+    {% load staticfiles %}
+
+<section id="slider"><!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+					
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                    </ol>
+                    
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-4">
+
+                                <h1><span>Le</span> principe:</h1>
+                                
+                                <p> Chine, Corée du Sud, Thailand, Vietnam ou Inde, le principe est le meme. Plus la quantite commandee est elevee, plus le prix diminue.  </p>
+               
+                            </div>
+							<div class="col-sm-2">
+							<img src="{% static 'images/home/logo.png' %}" class="girl img-responsive" alt="" />
+							 </div>
+							
+							<div class="item active">
+									<div class="col-sm-5">
+									<h1><span>La</span> qualité:</h1>
+										
+										<p>Nous achetons et utilisons tous quotidiennement des produits asiatiques. Sur la qualité, c’est toujours la loterie.  
+											Sauf que OKAY aura pour mission de :
+													<ul class="liste">
+														<li><span class="glyphicon glyphicon-hand-right"></span> &nbsp; &nbsp;Rechercher uniquement des produits de qualité au bas prix</li> 
+														<li><span class="glyphicon glyphicon-hand-right"></span>&nbsp; &nbsp;Packager et expédier les colis jusqu’à l'arrivée à Madagascar.  </li> 
+														<li><span class="glyphicon glyphicon-hand-right"></span>&nbsp; &nbsp;Négocier directement des GARANTIES </li> 
+													</ul>
+										</p>
+									
+									</div>
+							</div>		
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-4">
+                                <h1><span>La</span> quantité:</h1>
+                 
+                                <p>Evidemment, nous n’aurons pas les meilleurs prix sans commander en masse. Aussi, nous imposerons des quantités minimums (MOQ) afin de négocier les meilleurs prix possibles. </p>
+                                
+                            </div>
+							<div class="col-sm-2">
+							<img src="{% static 'images/home/logo.png' %}" class="girl img-responsive" alt="" />
+							 </div>
+                            <div class="col-sm-5">
+                               <h1><span>Nos</span> cibles:</h1>
+                                <p>Tout le monde. Particuliers, commercants ou entreprises, notre société cible toutes les catégories de besoins et de portefeuiles. </p>
+                            </div>
+                        </div>
+						</div>
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+    
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+        
+    <section>
+        <div class="container">
+            <div class="row">
+                {% include "side-bar.html" %}                
+                
+                <div class="col-sm-9 padding-right">
+                    <div class="features_items"><!--features_items-->
+                    
+                            
+                        {% include "includes/slider.html" %}
+                        <br>
+                        <br>
+                        <h2 class="title text-center">Derniers produits</h2>
+                        <div class="row">    
+                             {% for product in products %}
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img class="produit-thumbnail thumbnail" src="{{ MEDIA_URL }}{{ product.thumbnail }}"  class="thumbnail" alt="" />
+                                            <h2>{{ product.price }} MGA</h2>
+                                            <p class="product-name" >{{ product.name }}</p>
+                                        </div>
+                                        <div class="product-overlay">
+                                            <div class="overlay-content">
+                                                <p class="product-name">MOQ : {{ product.moq }} [{{ product.get_moq_restant }} restant]</p>
+                                                <h2>{{ product.price }} MGA</h2>
+                                                <p class="product-name">{{ product.name }}</p>
+                                                <a href="{% url 'commerce:display_product' product.id %}" class="btn btn-default add-to-cart"><i class="fa fa-eye -open"></i>Details / Commandes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            {% empty %}
+                            {% endfor %}
+                        </div>
+                    </div><!--features_items-->
+                
+                        <!-- fnin du boucle nos poduit disponibles -->          
+                    {% include "recommended-product.html" %}
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,1 @@
+web: gunicorn okayproject.wsgi --log-file -

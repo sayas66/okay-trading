@@ -1,0 +1,79 @@
+{% load static %}
+
+<div class="col-sm-3">
+    <div class="left-sidebar">       
+            <!-- categories -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" href="#item-category" data-toggle="collapse">
+                                <h4>Categories<span class="glyphicon glyphicon-chevron-right pull-right"></span></h4>
+                            </a>
+                        </h3>
+                </div>
+                <div id="item-category" class="collapse in">
+                    <div class="list-group">
+                    {% for category in categories_list %}
+                        <a class="list-group-item" href="{% url 'commerce:display_category' category.id %}">{{ category.name }}</a>
+                    {% empty %}
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a class="" href="{% url 'commerce:index' %}">
+                        Derniers produits
+                        <span class="glyphicon glyphicon-star pull-right"></span>
+                    </a>
+                </div>
+            </div>
+            <!-- filtre -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle" href="#item-offres" data-toggle="collapse">
+                                <h4>Nos offres<span class="glyphicon glyphicon-chevron-right pull-right"></span></h4>
+                            </a>
+                        </h3>
+                </div>
+                <div id="item-offres" class="collapse in">
+                    <div class="list-group">
+                    <a class="list-group-item" href="{% url 'commerce:display_product_min_price' %}">Moins chers</a>
+                    <a class="list-group-item" href="{% url 'commerce:display_product_min_moq' %}">MOQ minimum</a>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a class="" href="{% url 'commerce:shipping_special' %}">
+                        Commande spéciale
+                        <span class="glyphicon glyphicon-star pull-right"></span>
+                    </a>
+                </div>
+            </div>
+            <!-- account -->
+            {% if user.is_authenticated %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a class="accordion-toggle" href="#item-account" data-toggle="collapse">
+                            <h4>Espace client<span class="glyphicon glyphicon-chevron-right pull-right"></span></h4>
+                        </a>
+                    </h3>
+                </div>
+                <div id="item-account" class="collapse in">
+                    <div class="list-group">
+                        <a class="list-group-item " href="{% url 'commerce:account' %}">Mon compte</a>
+                        <a class="list-group-item " href="{% url 'commerce:addresses' %}">
+                            Mes renseignements
+                            <span class="badge">{{ address_count }}</span>
+                        </a>
+                        <a class="list-group-item " href="{% url 'commerce:display_order' %}">Mes commandes</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="panel">
+                <img src="{% static 'images/home/shipping.jpg' %}" alt="" />
+            </div>
+            
+    </div>
+</div>

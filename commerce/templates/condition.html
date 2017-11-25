@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Terme et condition de vente{% endblock %}
+
+{% block content %}
+        
+    {% load staticfiles %}
+
+<section><!--slider-->
+    <div class="container">
+        <div class="row">
+            {% include "side-bar.html" %}
+            <div class="col-sm-9">
+                <h2 class="title text-center">Termes et Conditions</h2>
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <article>
+                            <h1>Article 1</h1>
+                            <ol>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ol>
+                        </article>
+                        <hr>
+                        <article>
+                            <h1>Article 2</h1>
+                            <ol>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ol>
+                        </article>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+    
+{% endblock %}

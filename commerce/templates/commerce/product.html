@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<section>
+    <div class="row">
+        {% include "side-bar.html" %}
+        
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="product-details"><!--product-details-->
+                    <div class="col-sm-5">
+                        <div class="view-product thumbnail">
+                            <img src="{{ MEDIA_URL }}{{ product.thumbnail }}" alt="" />
+                            <a href="#"><h3>ZOOM</h3></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        
+                        <!--  -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse">
+                                            <h4>
+                                                {{ product.name }}
+                                            <!-- <span class="glyphicon glyphicon-chevron-right pull-right"></span> -->
+                                            </h4>
+                                            <small>{{ product.short_desc }}</small>
+                                        </a>
+                                    </h3>
+                            </div>
+                            <div class="collapse in">
+                                <div class="panel-body">
+                                    <div class="form-details">
+                                         <ul>
+                                            <li><label>Catégorie</label> {{ product.category }}</li>
+                                            <li>
+                                                <label>MOQ</label> {{ product.moq }} 
+                                                <small class="text-info">({{ product.get_moq_restant }} restant pour validation de ce produit)</small>
+                                                {% comment %}
+                                                    {% if product.moq > product.qty_commanded %}
+                                                        <small class="text-info"> &nbsp; [La moq est atteinte]</small>
+                                                    {% endif %}
+                                                {% endcomment %}
+                                            </li>
+                                            <li><label>Commandé</label> {{ product.qty_commanded }}</li>
+                                            <li><label>Fournisseur</label> {{ product.price }} MGA</li>
+                                            <li>
+                                                <label>Validité</label>
+                                                <span class="text-danger">{{ product.date_validity|timeuntil }} Restant</span>
+                                            </li>
+                                            
+                                            <hr>
+                                            {% if product.long_desc == '' %}
+                                                <p class="text-warning"><i class="fa fa-3x fa-info-circle pull-left"></i>
+                                                    Ce produit ne contient pas de description détaillée.
+                                                </p>
+                                            {% else %}
+                                                <p class="text-info"><i class="fa fa-3x fa-info-circle pull-left"></i>
+                                                    {{ product.long_desc }}
+                                                </p>
+                                            {% endif %}
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% if user.is_authenticated%}
+                                    {% if not user.is_superuser %} 
+                                    <div class="panel-footer">
+                                        <a href="#do_order" data-toggle="modal" id="do_shipping">Effectuer une commande &raquo;</a>
+                                    {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="panel-footer">
+                                        <div class="alert alert-info">
+                                            <p>Pour effectuer une commande, vous devez vous connecter à votre compte utilisateur</p>                                        
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div><!--/product-details-->
+            {% include "recommended-product.html" %}
+            </div>
+                  
+            <!-- recommended products -->
+            
+            
+        </div>
+    </div>
+</section>
+
+<!-- simulator -->
+<div class="modal" id="do_order">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>COMMANDER LE PRODUIT</h4>
+                <p>{{ product.name }}</p>
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="modal-body full-width">
+                    <p class="text-info"><i class="fa fa-3x fa-question-circle pull-left"></i>
+                        Quel est la quantité de produit que vous désirer? 
+                        <input id="simulator_quantity" type="number" min="1" value="1" placeholder="quatité" class="input-sm pull-right" name="quantity">
+                    </p>
+                    <br/>
+                    <div>
+                        <h4>Simulateur (MGA)</h4>
+                        <br/>
+                        
+                        <!--  -->
+                        <div class="table-responsive cart_info">
+            
+                            <table class="table table-condensed">
+                                
+                                <tr class="cart_menu">
+                                    <td class="">Prix Fournisseur</td>
+                                    <td class="">
+                                        <input type="text" id="simulator_fournisseur" value="{{ product.price }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Transport</td>
+                                    <td class="">
+                                        <input type="text" id="simulator_transport" value="{{ product.transport }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TVA (20%)</td>
+                                    <td class="">
+                                        <input type="text" id="simulator_tva" value="{{ product.get_tva }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td class="">
+                                        <input type="text" id="simulator_total" value="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--  -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+    $(document).ready(function() {
+        var fournisseur = parseInt($('#simulator_fournisseur').val());
+        var transport = parseInt($('#simulator_transport').val());
+        
+        var qty = parseInt($('#simulator_quantity').val());
+        var t_fournisseur = fournisseur * qty;
+        var t_tva = ((t_fournisseur * 20) / 100) + t_fournisseur;
+        var t_transport = transport * qty;
+        var t_total = t_tva + t_transport
+        $('#simulator_total').attr('value', t_total);
+        
+       $('#simulator_quantity').change(function() {
+            var qty = parseInt($('#simulator_quantity').val());
+            var t_fournisseur = fournisseur * qty;
+            var t_tva = ((t_fournisseur * 20) / 100) + t_fournisseur;
+            var t_transport = transport * qty;
+            var t_total = t_tva + t_transport
+            <!-- var t_tva = t_founisseur; -->
+            $('#simulator_fournisseur').attr('value', t_fournisseur);
+            $('#simulator_tva').attr('value', t_tva);
+            $('#simulator_transport').attr('value', t_transport);
+            $('#simulator_total').attr('value', t_total);
+       });
+    });
+    </script>    
+{% endblock %}

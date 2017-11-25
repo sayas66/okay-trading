@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}Mon compte{% endblock%}
+
+{% load bootstrap3 %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            {% include "side-bar.html" %}
+            
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <h2 class="title text-center">Mon Compte</h2>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <form action="" method="POST" class="form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <label>First name</label>
+                                        <input type="text" class="form-control" placeholder="" name="first_name" value="{{ user.first_name }}">
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label>Last name</label>
+                                        <input type="text" class="form-control" placeholder="" name="last_name" value="{{ user.last_name }}">
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label>Username</label>
+                                        <input type="text" class="form-control" placeholder="" name="username" value="{{ user.username }}">
+                                    </div>
+                                    <!-- <br> -->
+                                    <!-- <div class="row">
+                                        <label>Ancien Password</label>
+                                        <input type="password" class="form-control" placeholder="" name="password1">
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label>Nouveau password</label>
+                                        <input type="password" class="form-control" placeholder="" name="password2">
+                                    </div> -->
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-primary btn-block" name="register">
+                                            Enregister
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

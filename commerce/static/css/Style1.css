@@ -1,0 +1,66 @@
+.macro{
+	padding-top:30px;
+	min-height: 300px;  
+}
+.produit-thumbnail{
+	height: 250px;
+}
+.img1{
+	min-height:200px;	
+	max-height:200px;	
+	min-width:250px;	
+	max-width:250px;	
+}
+.form{
+	/* width:80px; */
+}
+.liste li{
+	margin-left:10px;
+	text-align:justify;
+	color:#fbc02d;
+	font-style:italic;
+	font-weight:bold;
+	margin-bottom:5px;
+}
+.liste span{
+	color:#616161;
+}
+.companyinfo p{
+	font-size:15px;
+	
+} 
+.address{
+
+	width:310px;
+	margin-top:0px;
+}
+.vr{
+	text-align:left;
+	size:1px;
+}
+
+.product-name {
+    text-align:center;
+}
+
+.cart_quantity_input {
+    width: 100px;
+}
+
+.list-group-item {
+    border:none;
+}
+
+.panel {
+    border-radius:0px;
+}
+
+
+
+.panel-default > .panel-heading {
+  color: #FE980F;
+  /* background: #FE980F; */
+  background: transparent;
+  border-radius:0px;
+  border:none;
+}

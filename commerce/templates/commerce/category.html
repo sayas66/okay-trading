@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+
+
+<section>
+    <div class="row">
+        {% include "side-bar.html" %}
+                
+        <div class="features_items"><!--features_items-->
+            <h2 class="title text-center">{{ category.name }}</h2>
+            <div class="row">
+                 {% for product in products %}
+                <div class="col-sm-4">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img class="produit-thumbnail" src="{{ MEDIA_URL }}{{ product.thumbnail }}"  class="thumbnail" alt="" />
+                                <h2>{{ product.price }} AR</h2>
+                                <p class="product-name" >{{ product.name }}</p>
+                            </div>
+                            <div class="product-overlay">
+                                <div class="overlay-content">
+                                    <h2>{{ product.price }} AR</h2>
+                                    <p class="product-name">{{ product.name }}</p>
+                                    <a href="{% url 'commerce:display_product' product.id %}" class="btn btn-default add-to-cart"><i class="fa fa-eye -open"></i>Details / Commandes</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-sm-12">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fa fa-shopping-cart fa-3x pull-left"></i> <h4>Pas de produit :(</h4>
+                        <p>Acune produit disponible sur cette catégoire pour le moment</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <nav>
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class="previous"><a href="?page={{ products.previous_page_number }}">page précédente</a></li>
+                        {% endif %}
+                        <li class="disabled"><a href="#">Page {{ products.number }} sur {{ products.paginator.num_pages }}</a></li>
+                        {% if products.has_next %}
+                            <li><a href="?page={{ products.next_page_number }}"> page suivante</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}Commande special{% endblock%}
+
+{% load bootstrap3 %}
+
+{% block content %}  
+<section>
+    <div class="container">
+        <div class="row">
+            {% include "side-bar.html" %}                
+            <div class="col-sm-9 padding-right">
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">Commande spéciale</h2>
+                    <form action="" method="POST" class="form col-sm-6 col-sm-offset-3">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="btn btn-primary btn-block">
+                    </form>
+                </div>
+                <br>
+                <br>
+                {% include "recommended-product.html" %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            $("#confirme").hide();
+            $("input:checkbox").click(function() {
+                var x = $("input[name='accepte_terme']:checked").val()
+                <!-- alert(x); -->
+                if(x == 'on') {
+                    $("#confirme").show();
+                }
+                else {
+                    $("#confirme").hide();
+                }
+            });
+        });
+    </script>
+{% endblock %}

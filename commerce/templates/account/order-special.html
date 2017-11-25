@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+
+{% block title %}Mes commande{% endblock%}
+
+{% load staticfiles %}
+
+{% block content %}
+<section>
+
+    <div class="row">
+        {% include "side-bar.html" %}
+        
+        <div class="col-sm-9 padding-right">
+            <div class="features_items"><!--features_items-->
+                <h2 class="title text-center">Commande des clients</h2>
+                
+                <!--  -->
+                <div class="category-tab shop-details-tab"><!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#all_orders" data-toggle="tab">Tous</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <!-- all orders -->
+                        <div class="tab-pane fade active in" id="all_orders" >
+                            {% for order in orders %}
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        
+                                        <h3 class="panel-title">
+                                            <a class="accordion-toggle" href="#item-order-{{ order.id }}" data-toggle="collapse">
+                                                <h4>
+                                                    {{ order.product.name }}
+                                                    <img src="{{ MEDIA_URL }}{{ order.product.thumbnail }}" width="40px">
+                                                </h4>
+                                                <small>
+                                                    Le {{ order.order_date }}
+                                                    <i class="fa fa-plus pull-right"></i>
+                                                </small>
+                                            </a>
+                                        </h3>
+                                        
+                                        
+                                    </div>
+                                    <div id="item-order-{{ order.id }}" class="collapse">
+                                        <div class="panel-body">
+                                            <small>
+                                            <p>Quantité : {{ order.quantity }}</p>
+                                            <p>Net à payer : {{ order.total }} AR</p>
+                                            <small>{{ order.address }}</small>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        {% if order.status == 'Valide' %}                                        
+                                            <p class="text-info">
+                                                <span class="glyphicon glyphicon-ok"></span> 
+                                                <small class="pull-right">
+                                                    {{ order.date_validated }}
+                                                    <a href="{% url 'commerce:print_contrat' order.id %}"><span class="glyphicon glyphicon-print"></span></a>
+                                                </small> 
+                                        {% else %}
+                                            <p class="text-danger">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                                <small class="pull-right">
+                                                    <a href="{% url 'commerce:print_contrat' order.id %}"><span class="glyphicon glyphicon-print"></span></a>
+                                                </small>
+                                        {% endif %}
+                                            &nbsp; {{ order.status }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                                {% if not orders %}                            
+                                    <p class="text-info"><i class="fa fa-3x fa-info-circle pull-left"></i>Vous n'avez pas encore effectuer de commande</p>
+                                {% else %}
+                                    <p class="text-info"><i class="fa fa-3x fa-info-circle pull-left"></i>Aucun de vos commandes ne sont pas encore validé</p>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="row">
+                                <nav>
+                                    <div class="container">
+                                        <ul class="pagination">
+                                            {% if orders.has_previous %}
+                                                <li class="orders"><a href="?page={{ orders.previous_page_number }}">page précédente</a></li>
+                                            {% endif %}
+                                            <li class="disabled"><a href="#">Page {{ orders.number }} sur {{ orders.paginator.num_pages }}</a></li>
+                                            {% if orders.has_next %}
+                                                <li><a href="?page={{ orders.next_page_number }}"> page suivante</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                    </div>
+                <!--  -->
+                
+            </div><!--features_items-->
+        
+                <!-- fnin du boucle nos poduit disponibles -->          
+            
+            
+        </div>
+        
+    </div>
+
+</section>
+
+{% endblock %}
